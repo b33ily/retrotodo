@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ВХОД | TODO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/retro.css">
+  <style>
+    .auth-container {
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      background: var(--retro-dark);
+      color: var(--retro-text);
+      border: 2px solid var(--retro-blue);
+      cursor: pointer;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+    }
+    
+    .auth-tab.active {
+      background: var(--retro-purple);
+      color: var(--retro-yellow);
+      border-color: var(--retro-yellow);
+    }
+    
+    .auth-form {
+      display: none;
+    }
+    
+    .auth-form.active {
+      display: block;
+    }
+    
+    .auth-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body class="crt-effect">
+  <div id="retroLoader" class="retro-loading-screen">
+    <div class="loader-content">
+      <div class="loader-icon">
+        <div class="floppy-disk">
+          <div class="floppy-top"></div>
+          <div class="floppy-label">ВХОД</div>
+        </div>
+      </div>
+      <div class="loader-text">
+        <span class="loading-message">ПРОВЕРКА УЧЕТНЫХ ДАННЫХ...</span>
+        <span class="loading-progress">0%</span>
+      </div>
+      <div class="loader-bar">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="retro-container">
+    <header class="retro-header">
+      <div class="scanlines"></div>
+      <div class="header-content">
+        <div class="logo-tape">
+          <i class="fas fa-user-lock"></i>
+          <h1>ВХОД</span></h1>
+        </div>
+        <div class="pixel-nav">
+          <a href="index.html" class="pixel-btn"><i class="fas fa-home"></i></a>
+        </div>
+      </div>
+    </header>
+
+    <main class="retro-main">
+      <div class="vhs-card auth-container">
+        <div class="vhs-label">ВХОД В СИСТЕМУ</div>
+        <div class="vhs-content">
+          <div class="auth-tabs">
+            <div class="auth-tab active" data-tab="login">ВХОД</div>
+            <div class="auth-tab" data-tab="register">РЕГИСТРАЦИЯ</div>
+          </div>
+          
+          <form id="loginForm" class="auth-form active">
+            <div class="retro-input">
+              <label for="loginEmail">ЛОГИН:</label>
+              <input type="text" id="loginEmail" required class="pixel-input" placeholder="Введите email">
+            </div>
+            <div class="retro-input">
+              <label for="loginPassword">ПАРОЛЬ:</label>
+              <input type="password" id="loginPassword" required class="pixel-input" placeholder="Введите пароль">
+            </div>
+            <div class="auth-actions">
+              <button type="button" class="pixel-btn" onclick="window.location.href='index.html'">
+                <i class="fas fa-times"></i> ОТМЕНА
+              </button>
+              <button type="submit" class="pixel-btn primary">
+                <i class="fas fa-sign-in-alt"></i> ВОЙТИ
+              </button>
+            </div>
+          </form>
+          
+          <form id="registerForm" class="auth-form">
+            <div class="retro-input">
+              <label for="regUsername">ИМЯ ПОЛЬЗОВАТЕЛЯ:</label>
+              <input type="text" id="regUsername" required class="pixel-input" placeholder="Введите имя">
+            </div>
+            <div class="retro-input">
+              <label for="regEmail">E-MAIL:</label>
+              <input type="email" id="regEmail" required class="pixel-input" placeholder="Введите email">
+            </div>
+            <div class="retro-input">
+              <label for="regPassword">ПАРОЛЬ:</label>
+              <input type="password" id="regPassword" required class="pixel-input" placeholder="Не менее 6 символов">
+            </div>
+            <div class="retro-input">
+              <label for="regConfirm">ПОДТВЕРДИТЕ ПАРОЛЬ:</label>
+              <input type="password" id="regConfirm" required class="pixel-input" placeholder="Повторите пароль">
+            </div>
+            <div class="auth-actions">
+              <button type="button" class="pixel-btn" onclick="window.location.href='index.html'">
+                <i class="fas fa-times"></i> ОТМЕНА
+              </button>
+              <button type="submit" class="pixel-btn primary">
+                <i class="fas fa-user-plus"></i> СОЗДАТЬ
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer class="retro-footer">
+      <div class="footer-tape">
+        <div class="contact-info">
+          <p><i class="fas fa-phone-alt"></i> 8-995-199-82-17</p>
+          <p><i class="fas fa-envelope"></i> abunnygily@gmail.ru</p>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 1994-2025 TODO SYSTEMS</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/retro-auth.js"></script>
+  <script src="js/retro.js"></script>
+</body>
+</html>

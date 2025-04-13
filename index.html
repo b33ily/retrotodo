@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> TODO | Ретро планировщик </title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/retro.css">
+</head>
+<body class="crt-effect">
+<div id="retroLoader" class="retro-loading-screen">
+  <div class="loader-content">
+    <div class="loader-icon">
+      <div class="floppy-disk">
+        <div class="floppy-top"></div>
+        <div class="floppy-label">TODO</div>
+      </div>
+    </div>
+    <div class="loader-text">
+      <span class="loading-message">ЗАГРУЗКА СИСТЕМЫ...</span>
+      <span class="loading-progress">0%</span>
+    </div>
+    <div class="loader-bar">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+</div>
+  <div class="retro-container">
+    <header class="retro-header">
+      <div class="scanlines"></div>
+      <div class="header-content">
+        <div class="logo-tape">
+          <i class="fas fa-cassette-tape"></i>
+          <h1>TODO</span></h1>
+        </div>
+        <div class="pixel-nav">
+          <a href="index.html" class="pixel-btn active"><i class="fas fa-home"></i> Главная</a>
+          <a href="tasks.html" class="pixel-btn"><i class="fas fa-tasks"></i> Задачи</a>
+          <a href="profile.html" class="pixel-btn"><i class="fas fa-user"></i> Профиль</a>
+          <button id="themeToggleBtn" class="pixel-btn"><i class="fas fa-moon"></i></button>
+          <button onclick="logout()" class="pixel-btn danger">
+            <i class="fas fa-power-off"></i> Выйти
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="retro-main">
+      <div class="vhs-card">
+        <div class="vhs-label">ДОБРО ПОЖАЛОВАТЬ</div>
+        <div class="vhs-content">
+          <h2>Ваш цифровой планировщик</h2>
+          <p class="retro-text">В стиле 90-х </p>
+          
+          <div class="pixel-grid">
+            <div class="pixel-card">
+              <div class="pixel-icon floppy-icon">
+                <i class="fas fa-save"></i>
+              </div>
+              <h3>Сохраняйте</h3>
+              <p>Все данные хранятся локально</p>
+            </div>
+            
+            <div class="pixel-card">
+              <div class="pixel-icon tape-icon">
+                <i class="fas fa-tape"></i>
+              </div>
+              <h3>Записывайте</h3>
+              <p>Неограниченное количество задач</p>
+            </div>
+
+            <div class="pixel-card">
+              <div class="pixel-icon gamepad-icon">
+                <i class="fas fa-gamepad"></i>
+              </div>
+              <h3>Играйте</h3>
+              <p>Зарабатывайте достижения</p>
+            </div>
+          </div>
+          
+          <div class="action-buttons">
+            <a href="tasks.html" class="retro-btn">
+              <i class="fas fa-play"></i> НАЧАТЬ
+            </a>
+            <button id="secretBtn" class="retro-btn secondary">
+              <i class="fas fa-question"></i> СЕКРЕТ
+            </button>
+          </div>
+
+          <!-- Блок мини-игры (изначально скрыт) -->
+          <div id="easterEgg" class="easter-egg" style="display: none;">
+            <h3>РЕТРО ИГРА</h3>
+            <div id="gameContainer">
+              <div id="gameScreen" class="game-screen"></div>
+              <div class="game-controls">
+                <button id="startGameBtn" class="pixel-btn small">
+                  <i class="fas fa-play"></i> НАЧАТЬ ИГРУ
+                </button>
+                <div class="game-stats">
+                  <span>Очки: <span id="gameScore">0</span></span>
+                  <span>Жизни: <span id="gameLives">3</span></span>
+                </div>
+              </div>
+            </div>
+            <div id="gameReward" class="game-reward" style="display: none;">
+              <p>Вы заработали: <span id="rewardAmount">0</span> XP!</p>
+              <button id="claimRewardBtn" class="pixel-btn small">
+                <i class="fas fa-gift"></i> ПОЛУЧИТЬ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="retro-footer">
+      <div class="footer-tape">
+        <div class="contact-info">
+          <p><i class="fas fa-phone-alt"></i> 8-995-199-82-17</p>
+          <p><i class="fas fa-envelope"></i> abunnygily@gmail.com</p>
+        </div>
+        <div class="pixel-social">
+          <a href="https://vk.com/retrotodo" target="_blank" class="pixel-icon"><i class="fab fa-vk"></i></a>
+          <a href="https://t.me/retroTODO_bot" target="_blank" class="pixel-icon"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 1994-2025 TODO SYSTEMS</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/retro.js"></script>
+  <!-- Скрипт мини-игры -->
+  <script>
+    // Показ/скрытие игры при нажатии на "СЕКРЕТ"
+    document.getElementById('secretBtn').addEventListener('click', function() {
+      const easterEgg = document.getElementById('easterEgg');
+      easterEgg.style.display = easterEgg.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Логика игры
+    let gameScore = 0;
+    let gameLives = 3;
+    let gameInterval;
+    let targets = [];
+
+    document.getElementById('startGameBtn').addEventListener('click', function() {
+      const gameScreen = document.getElementById('gameScreen');
+      gameScreen.innerHTML = '';
+      gameScore = 0;
+      gameLives = 3;
+      targets = [];
+      updateGameStats();
+      
+      createTarget();
+      
+      gameInterval = setInterval(() => {
+        if (gameLives <= 0) {
+          endGame();
+        } else {
+          gameLives--;
+          updateGameStats();
+          createTarget();
+        }
+      }, 2000);
+
+      setTimeout(endGame, 30000);
+    });
+
+    function createTarget() {
+      const gameScreen = document.getElementById('gameScreen');
+      const target = document.createElement('div');
+      target.className = 'game-target';
+      target.style.left = Math.random() * 80 + '%';
+      target.style.top = Math.random() * 80 + '%';
+      
+      target.addEventListener('click', function() {
+        gameScore += 10;
+        updateGameStats();
+        this.remove();
+        targets = targets.filter(t => t !== this);
+        createTarget();
+      });
+      
+      gameScreen.appendChild(target);
+      targets.push(target);
+    }
+
+    function updateGameStats() {
+      document.getElementById('gameScore').textContent = gameScore;
+      document.getElementById('gameLives').textContent = gameLives;
+    }
+
+    function endGame() {
+      clearInterval(gameInterval);
+      targets.forEach(target => target.remove());
+      document.getElementById('gameScreen').innerHTML = '<p class="game-over">ИГРА ОКОНЧЕНА!</p>';
+      document.getElementById('gameReward').style.display = 'block';
+      document.getElementById('rewardAmount').textContent = gameScore;
+    }
+
+    document.getElementById('claimRewardBtn').addEventListener('click', function() {
+      const currentXP = parseInt(localStorage.getItem('retroXP') || '0');
+      const newXP = currentXP + gameScore;
+      localStorage.setItem('retroXP', newXP);
+      
+      // Обновляем статистику в профиле
+      if (window.updateAchievements) {
+        window.updateAchievements();
+      }
+      
+      document.getElementById('easterEgg').style.display = 'none';
+      showAlert(`Вы получили ${gameScore} XP!`, 'success');
+    });
+  </script>
+</body>
+</html>

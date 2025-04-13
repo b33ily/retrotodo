@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ПРОФИЛЬ | TODO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/retro.css">
+  <style>
+    .avatar-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .avatar-option {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    .avatar-option:hover {
+      transform: scale(1.1);
+      border-color: var(--retro-yellow);
+    }
+    .avatar-option.selected {
+      border-color: var(--retro-green);
+      box-shadow: 0 0 10px var(--retro-green);
+    }
+    .gender-selector {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+    }
+    .gender-btn {
+      flex: 1;
+      padding: 8px;
+      text-align: center;
+      border: 2px solid var(--retro-blue);
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+    .gender-btn.selected {
+      background: var(--retro-purple);
+      border-color: var(--retro-yellow);
+    }
+  </style>
+</head>
+<body class="crt-effect">
+<div id="retroLoader" class="retro-loading-screen">
+  <div class="loader-content">
+    <div class="loader-icon">
+      <div class="floppy-disk">
+        <div class="floppy-top"></div>
+        <div class="floppy-label">ПРОФИЛЬ</div>
+      </div>
+    </div>
+    <div class="loader-text">
+      <span class="loading-message">ЗАГРУЗКА ПРОФИЛЯ...</span>
+      <span class="loading-progress">0%</span>
+    </div>
+    <div class="loader-bar">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+</div>
+  <div class="retro-container">
+    <header class="retro-header">
+      <div class="scanlines"></div>
+      <div class="header-content">
+        <div class="logo-tape">
+          <i class="fas fa-user-astronaut"></i>
+          <h1>ПРОФИЛЬ</span></h1>
+        </div>
+        <div class="pixel-nav">
+          <a href="index.html" class="pixel-btn"><i class="fas fa-home"></i></a>
+          <a href="tasks.html" class="pixel-btn"><i class="fas fa-tasks"></i></a>
+          <a href="profile.html" class="pixel-btn active"><i class="fas fa-user"></i></a>
+          <button id="themeToggleBtn" class="pixel-btn"><i class="fas fa-moon"></i></button>
+          <button onclick="logout()" class="pixel-btn danger">
+            <i class="fas fa-power-off"></i> Выйти
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="retro-main profile-crt">
+      <div class="vhs-card">
+        <div class="vhs-label">ДАННЫЕ ПОЛЬЗОВАТЕЛЯ</div>
+        <div class="vhs-content">
+          <div class="pixel-grid">
+            <div class="pixel-card avatar-card">
+              <div class="avatar-frame" id="avatarContainer">
+                <img src="assets/default-avatar.png" id="userAvatar" class="retro-avatar">
+                <label for="avatarUpload" class="upload-label">
+                  <i class="fas fa-camera-retro"></i>
+                </label>
+                <input type="file" id="avatarUpload" accept="image/*">
+              </div>
+              
+              <h3 id="displayUsername">Гость</h3>
+              
+              <div class="retro-input">
+                <input type="text" id="usernameInput" placeholder="Введите ваш никнейм" maxlength="20">
+              </div>
+              
+              <div class="gender-selector">
+                <div class="gender-btn" data-gender="male">
+                  <i class="fas fa-mars"></i> Мужской
+                </div>
+                <div class="gender-btn" data-gender="female">
+                  <i class="fas fa-venus"></i> Женский
+                </div>
+              </div>
+              
+                         
+              <button id="saveProfileBtn" class="pixel-btn small">
+                <i class="fas fa-save"></i> СОХРАНИТЬ ПРОФИЛЬ
+              </button>
+            </div>
+            
+            <div class="pixel-card stats-card">
+              <div class="pixel-icon">
+                <i class="fas fa-trophy"></i>
+              </div>
+              <h3>СТАТИСТИКА</h3>
+              <div class="retro-stats">
+                <p><span>ЗАДАЧИ:</span> <span class="glow-text" id="totalTasks">0</span></p>
+                <p><span>ВЫПОЛНЕНО:</span> <span class="glow-text" id="completedTasks">0</span></p>
+                <p><span>ОПЫТ:</span> <span class="glow-text" id="totalXP">0</span></p>
+                <p><span>УРОВЕНЬ:</span> <span class="glow-text" id="userLevel">1</span></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="rewards-section">
+            <h2 class="retro-title">ВАШИ ДОСТИЖЕНИЯ</h2>
+            <div class="xp-display">
+              <div class="xp-bar">
+                <div class="xp-progress" id="xpProgress"></div>
+              </div>
+              <span id="xpText">0/100 XP</span>
+            </div>
+            
+            <div class="achievements-grid">
+              <div class="achievement" data-xp="100">
+                <div class="achievement-icon"><i class="fas fa-medal"></i></div>
+                <div class="achievement-info">
+                  <h4>Первые шаги</h4>
+                  <p>Выполните 5 задач</p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress1"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="achievement" data-xp="250">
+                <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                <div class="achievement-info">
+                  <h4>Мастер задач</h4>
+                  <p>Выполните 20 задач</p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress2"></div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="achievement" data-xp="500">
+                <div class="achievement-icon"><i class="fas fa-crown"></i></div>
+                <div class="achievement-info">
+                  <h4>Король продуктивности</h4>
+                  <p>Выполните 50 задач</p>
+                  <div class="progress-bar">
+                    <div class="progress-fill" id="progress3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="index.html" class="retro-btn back-btn">
+        <i class="fas fa-arrow-left"></i> НА ГЛАВНУЮ
+      </a>
+    </main>
+
+    <footer class="retro-footer">
+      <div class="footer-tape">
+        <div class="contact-info">
+          <p><i class="fas fa-phone-alt"></i> 8-995-199-82-17</p>
+          <p><i class="fas fa-envelope"></i> abunnygily@gmail.com</p>
+        </div>
+        <div class="pixel-social">
+          <a href="https://vk.com/retrotodo" target="_blank" class="pixel-icon"><i class="fab fa-vk"></i></a>
+          <a href="https://t.me/retroTODO_bot" target="_blank" class="pixel-icon"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 1994-2025 TODO SYSTEMS</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/retro.js"></script>
+  <script>
+    // Загрузка данных профиля
+    function loadProfile() {
+      const profile = JSON.parse(localStorage.getItem('retroProfile')) || {};
+      const tasks = JSON.parse(localStorage.getItem('retroTasks')) || [];
+      const xp = parseInt(localStorage.getItem('retroXP')) || 0;
+      
+      // Статистика
+      const totalTasks = tasks.length;
+      const completedTasks = tasks.filter(t => t.completed).length;
+      const level = Math.floor(xp / 100) + 1;
+      const levelProgress = xp % 100;
+      
+      // Обновление интерфейса
+      document.getElementById('totalTasks').textContent = totalTasks;
+      document.getElementById('completedTasks').textContent = completedTasks;
+      document.getElementById('totalXP').textContent = xp;
+      document.getElementById('userLevel').textContent = level;
+      document.getElementById('xpProgress').style.width = `${levelProgress}%`;
+      document.getElementById('xpText').textContent = `${levelProgress}/100 XP`;
+      
+      // Профиль пользователя
+      if (profile.username) {
+        document.getElementById('usernameInput').value = profile.username;
+        document.getElementById('displayUsername').textContent = profile.username;
+      }
+      
+      // Аватар
+      if (profile.avatar) {
+        document.getElementById('userAvatar').src = `assets/${profile.avatar}.png`;
+        document.querySelector(`.avatar-option[data-avatar="${profile.avatar}"]`)?.classList.add('selected');
+      }
+      
+      // Пол
+      if (profile.gender) {
+        document.querySelector(`.gender-btn[data-gender="${profile.gender}"]`).classList.add('selected');
+      }
+      
+      // Достижения
+      updateAchievements(completedTasks);
+    }
+    
+    // Обновление достижений
+    function updateAchievements(completedTasks) {
+      const achievements = [
+        { id: 1, required: 5, progress: completedTasks },
+        { id: 2, required: 20, progress: completedTasks },
+        { id: 3, required: 50, progress: completedTasks }
+      ];
+      
+      achievements.forEach(ach => {
+        const progress = Math.min(Math.floor(ach.progress / ach.required * 100), 100);
+        document.getElementById(`progress${ach.id}`).style.width = `${progress}%`;
+        
+        const element = document.querySelector(`.achievement[data-xp="${ach.required * 20}"]`);
+        if (ach.progress >= ach.required) {
+          element.classList.add('unlocked');
+        }
+      });
+    }
+    
+    // Выбор аватара
+    document.querySelectorAll('.avatar-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        document.getElementById('userAvatar').src = this.src;
+      });
+    });
+    
+    // Выбор пола
+    document.querySelectorAll('.gender-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('selected'));
+        this.classList.add('selected');
+      });
+    });
+
+     // Загрузка своей аватарки
+    document.getElementById('avatarUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          document.getElementById('userAvatar').src = event.target.result;
+          document.querySelectorAll('.avatar-option').forEach(opt => opt.classList.remove('selected'));
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    
+    // Сохранение профиля
+    document.getElementById('saveProfileBtn').addEventListener('click', function() {
+      const username = document.getElementById('usernameInput').value.trim();
+      const selectedAvatar = document.querySelector('.avatar-option.selected')?.dataset.avatar;
+      const selectedGender = document.querySelector('.gender-btn.selected')?.dataset.gender;
+      
+      if (!username) {
+        showAlert('Введите никнейм!', 'error');
+        return;
+      }
+      
+      const profile = {
+        username,
+        avatar: selectedAvatar,
+        gender: selectedGender,
+        lastUpdate: new Date().toISOString()
+      };
+      
+      localStorage.setItem('retroProfile', JSON.stringify(profile));
+      document.getElementById('displayUsername').textContent = username;
+      showAlert('Профиль сохранён!', 'success');
+    });
+    
+    // Загрузка при открытии страницы
+    document.addEventListener('DOMContentLoaded', loadProfile);
+    
+    // Обновление при изменении данных
+    window.addEventListener('storage', function(e) {
+      if (['retroTasks', 'retroXP', 'retroProfile'].includes(e.key)) {
+        loadProfile();
+      }
+    });
+  </script>
+</body>
+</html>

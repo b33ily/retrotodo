@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ЗАДАЧИ | Ретро планировщик </title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/retro.css">
+</head>
+<body class="crt-effect">
+<div id="retroLoader" class="retro-loading-screen">
+  <div class="loader-content">
+    <div class="loader-icon">
+      <div class="floppy-disk">
+        <div class="floppy-top"></div>
+        <div class="floppy-label">ЗАДАЧИ</div>
+      </div>
+    </div>
+    <div class="loader-text">
+      <span class="loading-message">ЗАГРУЗКА ЗАДАЧ...</span>
+      <span class="loading-progress">0%</span>
+    </div>
+    <div class="loader-bar">
+      <div class="progress-bar"></div>
+    </div>
+  </div>
+</div>
+  <div class="retro-container">
+    <header class="retro-header">
+      <div class="scanlines"></div>
+      <div class="header-content">
+        <div class="logo-tape">
+          <i class="fas fa-tasks"></i>
+          <h1>ЗАДАЧИ</span></h1>
+        </div>
+        <div class="pixel-nav">
+          <a href="index.html" class="pixel-btn"><i class="fas fa-home"></i> Главная</a>
+          <a href="tasks.html" class="pixel-btn active"><i class="fas fa-tasks"></i> Задачи</a>
+          <a href="profile.html" class="pixel-btn"><i class="fas fa-user"></i> Профиль</a>
+          <button id="themeToggleBtn" class="pixel-btn"><i class="fas fa-moon"></i></button>
+          <button onclick="logout()" class="pixel-btn danger">
+            <i class="fas fa-power-off"></i> Выйти
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="retro-main">
+      <div class="vhs-card">
+        <div class="vhs-label">МЕНЕДЖЕР ЗАДАЧ</div>
+        <div class="vhs-content">
+          <button id="toggleTaskFormBtn" class="pixel-btn small">
+            <i class="fas fa-plus"></i> НОВАЯ ЗАДАЧА
+          </button>
+          
+          <div id="taskFormContainer" class="task-form-container" style="display: none;">
+            <div class="retro-input">
+              <label for="taskTitle">Название:</label>
+              <input type="text" id="taskTitle" class="pixel-input" placeholder="Введите название задачи" required>
+            </div>
+            
+            <div class="retro-input">
+              <label for="taskDescription">Описание:</label>
+              <textarea id="taskDescription" class="pixel-input" rows="3" placeholder="Добавьте описание (необязательно)"></textarea>
+            </div>
+            
+            <div class="form-row">
+              <div class="retro-input">
+                <label for="taskDate">Дата:</label>
+                <input type="date" id="taskDate" class="pixel-input">
+              </div>
+              
+              <div class="retro-input">
+                <label for="taskTime">Время:</label>
+                <input type="time" id="taskTime" class="pixel-input" value="12:00">
+              </div>
+              
+              <div class="retro-input">
+                <label for="taskPriority">Приоритет:</label>
+                <select id="taskPriority" class="pixel-input">
+                  <option value="low">Низкий</option>
+                  <option value="medium" selected>Средний</option>
+                  <option value="high">Высокий</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button id="cancelTaskBtn" class="pixel-btn small danger">
+                <i class="fas fa-times"></i> ОТМЕНА
+              </button>
+              <button id="saveTaskBtn" class="pixel-btn small primary">
+                <i class="fas fa-save"></i> СОХРАНИТЬ
+              </button>
+            </div>
+          </div>
+          
+          <div class="pixel-tabs">
+            <button class="pixel-btn small active" data-filter="all">
+              <i class="fas fa-list"></i> ВСЕ
+            </button>
+            <button class="pixel-btn small" data-filter="active">
+              <i class="fas fa-circle-notch"></i> АКТИВНЫЕ
+            </button>
+            <button class="pixel-btn small" data-filter="completed">
+              <i class="fas fa-check"></i> ВЫПОЛНЕННЫЕ
+            </button>
+            <button class="pixel-btn small danger" id="clearAllBtn">
+              <i class="fas fa-trash"></i> ОЧИСТИТЬ
+            </button>
+          </div>
+          
+          <div class="task-list-container">
+            <ul id="taskList" class="pixel-list">
+            </ul>
+          </div>
+          
+          <div class="task-stats">
+            <div class="stat-display">
+              <span class="stat-label">ЗАДАЧИ:</span>
+              <span class="stat-value" id="totalCount">0</span>
+            </div>
+            <div class="stat-display">
+              <span class="stat-label">ВЫПОЛНЕНО:</span>
+              <span class="stat-value" id="completedCount">0</span>
+            </div>
+            <div class="stat-display">
+              <span class="stat-label">УРОВЕНЬ:</span>
+              <span class="stat-value" id="userLevel">1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <a href="index.html" class="retro-btn back-btn">
+        <i class="fas fa-arrow-left"></i> НА ГЛАВНУЮ
+      </a>
+    </main>
+
+    <footer class="retro-footer">
+      <div class="footer-tape">
+        <div class="contact-info">
+          <p><i class="fas fa-phone-alt"></i> 8-995-199-82-17</p>
+          <p><i class="fas fa-envelope"></i> abunnygily@gmail.com</p>
+        </div>
+        <div class="pixel-social">
+          <a href="https://vk.com/retrotodo" target="_blank" class="pixel-icon"><i class="fab fa-vk"></i></a>
+          <a href="https://t.me/retroTODO_bot" target="_blank" class="pixel-icon"><i class="fab fa-telegram"></i></a>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>© 1994-2025 TODO SYSTEMS</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/retro-tasks.js"></script>
+  <script src="js/retro.js"></script>
+</body>
+</html>
